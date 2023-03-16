@@ -3,8 +3,6 @@ import * as BooksAPI from "../../BooksAPI";
 import BookList from "../bookList/bookList";
 
 const BookShelf = () => {
-  // [{wantToRead: 'Want to Read'}, {currentlyReading: 'Currently Reading'}, {read: 'read'}]
-
   const [bookShelf, setBookShelf] = useState([{
     name: "currently Reading",
     value: "currentlyReading"
