@@ -5,7 +5,6 @@ const Book = (props) => {
   const changeBookStatus = (status, book) => {
     props.updateBookStauts(status, book);
   };
-
   return (
     <div>
       <div className="book">
