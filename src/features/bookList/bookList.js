@@ -2,37 +2,18 @@ import { useState, useEffect } from "react";
 import * as BooksAPI from "../../BooksAPI";
 import Book from "../book/book";
 import "./bookList.css";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { getBooks } from "./bookListSlice";
 
 const BookList = (props) => {
-  const [bookList, updateBooks] = useState({
-    books: [],
-  });
+  const dispatch = useDispatch();
+  const bookList = useSelector((state) => state.bookSlice.books);
 
   useEffect(() => {
-    getAllBooks();
-  }, [bookList.books]);
-
-  const getAllBooks = () => {
-    BooksAPI.getAll()
-      .then((res) => {
-        updateBooks({ books: res });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const updateStatus = (status, book) => {
-    BooksAPI.update(book, status)
-      .then((res) => {
-        console.log(res);
-        getAllBooks();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  const bookShelfs = bookList.books.filter(
+    dispatch(getBooks())
+  }, []);
+  const bookShelfs = bookList.filter(
     (book) => book.shelf === props.shelf.value
   );
   const bookListView = bookShelfs.map((book, index) => {
@@ -43,7 +24,7 @@ const BookList = (props) => {
         author={book.authors[0]}
         shelf={props.shelf}
         book={book}
-        updateBookStauts={updateStatus}
+        updateBookStauts = {() => dispatch(getBooks())}
       ></Book>
     );
   });

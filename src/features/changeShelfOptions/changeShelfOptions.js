@@ -1,9 +1,15 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { updateBooks, getBooks } from "../bookList/bookListSlice";
 const ChangeShelfOptions = (props) => {
+  const dispatch = useDispatch();
 
   const handleChange = (event) => {
-    const value = event.target.value;
-    props.changeBookStatus(value, props.book);
+    const payload = {};
+    payload.status = event.target.value;
+    payload.book = props.book;
+    dispatch(updateBooks(payload));
+    props.changeBookStatus();
   }
 
     return(

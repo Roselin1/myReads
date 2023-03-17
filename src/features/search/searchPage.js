@@ -1,34 +1,28 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import * as BooksAPI from "../../BooksAPI";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Book from "../book/book";
-import "./searchPage.css"
+import "./searchPage.css";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { searchBooks } from "../bookList/bookListSlice";
 const Search = () => {
+  const dispatch = useDispatch();
+  const searchResult = useSelector(
+    (state) => state.bookSlice.searchResultBooks
+  );
   const navigateTo = useNavigate("");
-  const [searchResult, setSearchResult] = useState();
 
-  useEffect(() => {
-    console.log("Re-render");
-  }, [searchResult]);
+  useEffect(() => {}, [searchResult]);
   const searchForBook = (event) => {
     setTimeout(() => {
-      BooksAPI.search(event.target.value, 100)
-        .then((res) => {
-          console.log(res);
-          setSearchResult(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      dispatch(searchBooks(event.target.value));
     }, 1000);
   };
-  const updateStatus = (status, book) => {
-    BooksAPI.update(book, status)
-      .then((res) => {})
-      .catch((err) => {
-        console.log(err);
-      });
+  const updateStatus = () => {
+    alert("DONE !");
+    navigateTo("/");
   };
 
   return (
@@ -52,8 +46,7 @@ const Search = () => {
             return (
               <Book
                 title={book.title}
-                imageUrl={book.imageLinks.thumbnail}
-                // author={book.authors[0]}
+                imageUrl={book.imageLinks?.thumbnail}
                 shelf={"read"}
                 book={book}
                 updateBookStauts={updateStatus}
