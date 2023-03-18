@@ -13,6 +13,7 @@ const BookList = (props) => {
   useEffect(() => {
     dispatch(getBooks())
   }, []);
+  console.log('bookList',bookList)
   const bookShelfs = bookList.filter(
     (book) => book.shelf === props.shelf.value
   );

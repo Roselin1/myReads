@@ -11,7 +11,8 @@ function App() {
   
 
   return (
-    <div className="app">
+    <div role='maindev' className="App">
+      <h1>Hello</h1>
       <Routes>
         <Route path="/" element={<MainPage/>} />
         <Route path="/search" element={<Search/>} />

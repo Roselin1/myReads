@@ -26,20 +26,17 @@ const bookListSlice = createSlice({
     searchResultBooks: [],
   },
   reducers: {},
-  extraReducers: {
-    [getBooks.fulfilled]: (state, action) => {
-      state.books = action.payload;
-    },
-    [getBooks.rejected]: (state) => {
-      state.error = "error";
-    },
-    [updateBooks.rejected]: (state, action) => {
-      state.error = "error";
-    },
-    [searchBooks.fulfilled]: (state, action) => {
-      state.searchResultBooks = action.payload;
-    },
-  },
+  extraReducers: (builder) => {
+    builder.addCase(getBooks.fulfilled, (state, action) => {
+       state.books = action.payload;
+    })
+    builder.addCase(getBooks.rejected, (state, action) => {
+        state.error = "error";
+      })
+      builder.addCase(searchBooks.fulfilled, (state, action) => {
+        state.searchResultBooks = action.payload;
+      })
+  }
 });
 export const {} = bookListSlice.actions;
 export default bookListSlice.reducer;
